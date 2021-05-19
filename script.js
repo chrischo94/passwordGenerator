@@ -1,17 +1,18 @@
 // Assignment Code
+
 var generateBtn = document.querySelector("#generate");
 
-var newPassword = "";
+var finalPassword = "";
 //array of special characters (string)
-specialCharacters = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"];
+var specialCharacters = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"];
 //array of lower case characters (string)
-lowerCaseCharacters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var lowerCaseCharacters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 //array of upper case characters (string)
-upperCaseCharacters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+var upperCaseCharacters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 //alt? var = upperCaseCharacters = lowerCaseCharacters.toUpperCase();
 
 //array of numeric characters (string)
-numericCharacters = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+var numericCharacters = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
 // function that prompts the user for their password selections
 
@@ -20,23 +21,23 @@ numericCharacters = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 //create conditional such as: if user input is not a a number, reject return
 //if user input is < 8, rejects; return
 //if user input is > 128 rejects return
-function userLength () {
+function userLength() {
   passwordLength = window.prompt("How many characters would you like your password to be? Must be between 8 and 128 characters");
     if (passwordLength <8) {
       alert("Not enough characters!");
-      passwordLength();
+      userLength();
     } else if (passwordLength > 128) {
       alert("Too many characters!");
-      passwordLength();
+      userLength();
     } else if (isNaN(passwordLength)) {
       alert("Please enter a number!");
-      passwordLength ();
+      userLength();
     } else {
       return passwordLength;
 
     }
   } 
-userLength ();
+//userLength ();
 
 
 // var to store the user's choice about special characters = answer to their confirm
@@ -60,14 +61,16 @@ function confirmNumber() {
 }
 
 //conditional if all chracter confirms are false, tell user they must pick at least one group and restart process
-function confirmCheck() {
-  if (confirmSpecial === false && confirmSpecial === false && confirmSpecial === false && confirmSpecial === false);
-  alert("Please select at least one group");
-  
-  console.log("Complete")
-}
+// function confirmCheck() {
+//   if (confirm("Do you want special characters in your password?") === false && confirm("Do you want lower case letters in your password?") == false && confirm("Do you want upper case letters in your password?") == false && confirm("Do you want numbers in your password?") == false) {
+//     alert("Please select at least one group");
+//     confirmCheck();
+//   } else {
+//       generatePassword();
+//   }
+// }
 
-confirmCheck();
+//confirmCheck();
 
 //function to randomly generate password (array)
 //math.floor() rounds to whole number
@@ -77,21 +80,17 @@ confirmCheck();
 
 //random special character
 function randomSpecial() {
-  newPassword += specialCharacters[Math.floor(Math.random) * specialCharacters.length]
-  return newPassword
+  return specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
 }
 
 function randomLower() {
-  newPassword += lowerCaseCharacters[Math.floor(Math.random) * lowerCaseCharacters.length]
-  return newPassword
+  return lowerCaseCharacters[Math.floor(Math.random() * lowerCaseCharacters.length)];
 }
 function randomUpper() {
-  newPassword += upperCaseCharacters[Math.floor(Math.random) * upperCaseCharacters.length]
-  return newPassword
-}
+  return upperCaseCharacters[Math.floor(Math.random() * upperCaseCharacters.length)];
+ }
 function randomNumeric() {
-  newPassword += numericCharacters[Math.floor(Math.random) * numericCharacters.length]
-  return newPassword
+  return numericCharacters[Math.floor(Math.random() * numericCharacters.length)];
 }
 
 
@@ -99,23 +98,41 @@ function randomNumeric() {
 //function to generate password
 //want to get our user input
 //var = password options function passwordSelection
-function generatePassword() {
-  newPassword = "";
+function createPassword() {
+  finalPassword = "";
   for (i = 0; i < passwordLength; i++) {
+    var combinedArray = [];
     if (yesSpecial === true) {
-      randomSpecial();
+      combinedArray.push(randomSpecial());
       } 
     if (yesLower === true) {
-      randomLower();
+      combinedArray.push(randomLower());
       } 
-    if (yesSpecial === true) {
-      randomUpper();
+    if (yesUpper === true) {
+      combinedArray.push(randomUpper());
       } 
-    if (yesSpecial === true) {
-      randomNumber();
+    if (yesNumber === true) {
+      combinedArray.push(randomNumeric());
       } 
+    var finalArray = combinedArray[Math.floor(Math.random() * combinedArray.length)]
+    finalPassword += finalArray;
   }
 }
+
+function makePassword() {
+  createPassword()
+  return finalPassword;
+}
+
+function generatePassword() {
+  userLength();
+  confirmSpecial();
+  confirmLower();
+  confirmUpper();
+  confirmNumber();
+  return makePassword();
+}
+
 
 // //write password to the #password input
 function writePassword() {
@@ -129,3 +146,4 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+//console.log(finalPassword)
