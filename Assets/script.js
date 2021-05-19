@@ -119,9 +119,22 @@ function createPassword() {
   }
 }
 
+  
+console.log(checkCharacterType)
+
 function makePassword() {
   createPassword()
   return finalPassword;
+}
+
+
+function checkCharacterType(){
+  if (yesSpecial === false && yesLower=== false && yesUpper=== false && yesNumber === false) {
+      alert("You must choose at least 1 character type!");
+      return generatePassword();
+  } else {
+    return makePassword();
+    }
 }
 
 function generatePassword() {
@@ -130,6 +143,7 @@ function generatePassword() {
   confirmLower();
   confirmUpper();
   confirmNumber();
+  checkCharacterType();
   return makePassword();
 }
 
